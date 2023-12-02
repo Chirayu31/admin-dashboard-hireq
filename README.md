@@ -1,30 +1,17 @@
-# React + TypeScript + Vite
+# React Admin Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+This is a simple React admin dashboard application with features such as table display, search functionality, pagination controls, and the ability to edit and delete rows in memory.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- **Table Display**: View user data with columns for Name, Email, Role, and Action.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Search Functionality**: Easily search for specific users based on name, email, or role.
 
-- Configure the top-level `parserOptions` property like this:
+- **Pagination Controls**: Navigate through user data with pagination controls, ensuring a user-friendly experience.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+- **Edit in Place**: Edit user details directly within the table, providing a seamless editing experience.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- **Delete Selected Rows**: Select one or more rows and delete them in bulk using the 'Delete Selected' button.
