@@ -1,33 +1,56 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from 'react'
+import { useRecoilState, useSetRecoilState } from "recoil";
+import Search from "./components/Search"
+import Table from "./components/Table"
+import { IUser } from "./types";
+import usersAtom, { filteredUsers } from "./atoms/usersAtom";
+import PaginationControls from './components/PaginationControl';
+import axios from 'axios';
+import DeleteSelected from './components/DeleteSelected';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const setUserData = useSetRecoilState<IUser[]>(usersAtom)
+  const [filteredData, setFilteredUsers] = useRecoilState<IUser[]>(filteredUsers)
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+
+    async function fetchData() {
+      setLoading(true)
+      try {
+        const response = await axios.get(
+          'https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json'
+        );
+
+        const data: IUser[] = response.data;
+        setUserData(data)
+        setFilteredUsers(data)
+        setLoading(false)
+      } catch (error) {
+        setLoading(false)
+        console.log(error)
+      }
+    }
+
+    fetchData()
+  }, [])
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <h1 className="heading">Admin Dashboard</h1>
+
+      {loading ? <>loading</> :
+        <>
+          <Search />
+
+          <Table />
+          <div className='bottom-stuff'>
+            <DeleteSelected />
+            <PaginationControls totalItems={filteredData.length} />
+          </div>
+
+        </>
+      }
     </>
   )
 }
